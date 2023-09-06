@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 1357px;
+}
+
+.header {
+    color: #0013b9;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    margin-left: 80px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.topnav {
+    width: 100%;
+    border-top: 1px solid #0000007c;
+}
+
+.navbuttons {
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-bottom: 40px;
+}
+
+.navbuttons a {
+    font-family: Helvetica;
+    font-size: smaller;
+    padding: 0px 20px 10px 0px;
+    color: #000;
+    text-decoration: none;
+}
+
+.parallax-cover {
+    padding: 0 80px;
+}
+
+.parallax {
+    background-image: url('http://csci571.com/hw/hw3/images/Cutlery.png');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0 0px;
+    padding: 60px 80px 300px;
+}
+
+.parallax-heading {
+    color: rgb(33, 33, 206);
+    font-family: 'Prata', serif;
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.parallax-button {
+    font-size: 20px;
+    padding: 16px;
+    margin-top: 30px;
+}
+
+.content-div {
+    margin: 30px 80px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-heading {
+    font-size: 40px;
+    font-family: 'Rozha One', serif;
+    font-weight: 600;
+    color:rgb(46, 46, 206);
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+
+.image-caption-div {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.content-caption {
+    font-family: 'Rozha One', serif; 
+    font-size: 30px;
+    color: rgb(33, 33, 206);
+    margin: 70px 0 70px 0;
+}
+
+.image-row-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.image-row-div img {
+    max-width: 100%;
+    width: 100%;
+}
+
+.image-caption-div:first-child {
+    margin-right: 30px;
+}
