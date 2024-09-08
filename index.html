@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
     <h1>CSCI 571 Assignments</h1>
-    <input placeholder="Enter name of assignment page" />
+    <p>This page is still valid, but the table is not here</p>
+    <form id="assignmentForm">
+        <input type="text" id="assignmentInput" placeholder="Enter name of assignment page" required />
+        <button type="submit">Go</button>
+    </form>
+
+    <script>
+        document.getElementById('assignmentForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            // Get the value from the input box
+            const assignmentName = document.getElementById('assignmentInput').value;
+            
+            // Get the current URL
+            const currentUrl = window.location.href;
+            
+            // Append the assignment name to the current URL as a query parameter
+            const newUrl = currentUrl + '?assignment=' + encodeURIComponent(assignmentName);
+            
+            // Redirect to the new URL
+            window.location.href = newUrl;
+        });
+    </script>
 </body>
 </html>

@@ -6,55 +6,127 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Playfair+Display:wght@500&family=Prata&family=Rozha+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">        
     </head>
     <body>
-        <div>
-            <H1 class="header">B&#246;N</H1>
-        </div>
         <!-- menu bar -->
         <div class="topnav">
+            <p class="menu-text">MENU</p>
             <div class="navbuttons">
-                <a style="color:blue">Home</a>
-                <a>Decor</a>
-                <a>Your Kitchen</a>
-                <a>Your Bathroom</a>
-                <a>Your Bedroom</a>
-                <a>About</a>
-                <a>Contact</a>
+                <a class="menu-button" href="page2.html#About">About</a>
+                <a class="menu-button" href="page2.html#Projects">Projects</a>
+                <a class="menu-button" href="page2.html#Services">Services</a>
             </div>
         </div>
-        <div class="parallax-cover">
-            <div class="parallax">
-                <p class="parallax-heading">Fall Cutlery<br>Collection</p>
-                <button class="parallax-button">Shop Now</button>      
-            </div>                
+
+        <!-- lawyer image section -->
+        <div class="lawyer-container">
+            <img class="lawyer-image" src="images/lawyer.jpg" alt="lawyer-image" />
+            <div class="lawyer-text-container">
+                <p id="dont-wait">DON'T WAIT</p>
+                <p id="improve-your-business-today">IMPROVE<br>YOUR BUSINESS<br>TODAY!</p>
+                <p id="hands-on-text">- Get your hands on Biz Optima -</p>
+                <input class="lawyer-input" /><br>
+                <button class="yellow-button">SIGN UP FOR FREE!</button>
+            </div>
+        </div>
+
+        <!-- 3 features section -->
+        <div class="features-container">
+            <div class="feature">
+                <p class="feature-title">AMAZING FEATURE #1</p>
+                <p class="feature-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius.
+                    <br>
+                    Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                </p>
+            </div>
+            <div class="feature">
+                <p class="feature-title">AMAZING FEATURE #2</p>
+                <p class="feature-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius.
+                    <br>
+                    Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                </p>
+            </div>
+            <div class="feature">
+                <p class="feature-title">AMAZING FEATURE #3</p>
+                <p class="feature-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius.
+                    <br>
+                    Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                </p>
+            </div>
         </div>
         
+        <!-- quote section -->
+        <div class="quote-container">
+            <p class="quote-text">"I COULDN'T HAVE ASKED FOR MORE THAN THIS. BIZ OPTIMA IS THE NEXT KILLER APP."</p>
+            <p class="quote-description">
+                <span class="quote-name"><B>John Doe</B></span><span class="quote-position">, CEO & Founder, BIz Optima</span>
+            </p>
+        </div>
 
-        <div class="content-div">
-            <p class="content-heading">Defining Styling Since 1965</p>
-            <div class="image-row-div">
-                <div class="image-caption-div">
-                    <img src="http://csci571.com/hw/hw3/images/Decor.png">
-                    <p class="content-caption">Decor</p>                    
+        <!-- prices section -->
+        <div class="prices-container">
+            <p class="prices-title">PRICES</p>
+            <p class="price-title-description">AFFORDABLE FOR EVERYONE</p>
+            <div class="three-plans">
+                <div class="price-selection-container">
+                    <p id="price-plan">BASIC PLAN</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #1</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #2</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #3</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #4</im>
+                    <p class="price-plan-price">$29.99<br>Monthly</p>
+                    <button class="price-button">BUY NOW</button>
                 </div>
-                <div class="image-caption-div">
-                    <img src="http://csci571.com/hw/hw3/images/Bedroom.png">
-                    <p class="content-caption">Your Bedroom</p>                    
+                <div class="price-selection-container">
+                    <p id="price-plan">STANDART PLAN</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #1</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #2</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #3</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #4</p>
+                    <p class="price-plan-price">$39.99<br>Monthly</p>
+                    <button class="price-button">BUY NOW</button>
                 </div>
-            </div>
-            <div class="image-row-div">
-                <div class="image-caption-div">
-                    <img src="http://csci571.com/hw/hw3/images/Kitchen.png">
-                    <p class="content-caption">Your Kitchen</p>                    
-                </div>
-                <div class="image-caption-div">
-                    <img src="http://csci571.com/hw/hw3/images/Bathroom.png">
-                    <p class="content-caption">Your Bathroom</p>                    
+                <div class="price-selection-container">
+                    <p id="price-plan">CORPORATE PLAN</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #1</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #2</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #3</p>
+                    <p id="plan-amazing-feature">Plan Amazing feature #4</p>
+                    <p class="price-plan-price">$49.99<br>Monthly</p>
+                    <button class="price-button">BUY NOW</button>
                 </div>
             </div>
         </div>
 
+        <div class="try-best-app">
+            <div class="background-wrapper">
+                <img src="images/notebook.jpg" />
+            </div>
+            <div class="best-app-textbox" >
+                <p class="try-best-app-header">TRY THE BEST APP IN THE MARKET</p>
+                <p class="try-best-app-tell-more">tell more why your software is amazing and why users need to sign up</p>
+                <button class="yellow-button">TRY IT FOR FREE</button>
+            </div>
+        </div>
+        
+        <!-- footer -->
+        <div class="footer-container">
+            <div class="footer-textbox">
+                <h1>BIZ OPTIMA</h1>
+                <p>224 Grant Ave, Redondo Beach, CA, 90278 310.555.1212 Ext. 3 for Business Needs</p>
+            </div>
+            <div class="footer-icons">
+                <img src="images/facebook.png" />
+                <img src="images/x.png" />
+                <img src="images/instagram.png" />
+                <img src="images/youtube.png" />
+                <img src="images/tiktok.png" />
+            </div>
+        </div>
     </body>
 </html>
+        

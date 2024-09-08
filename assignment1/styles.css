@@ -1,112 +1,378 @@
-* {
-    margin: 0;
-    padding: 0;
+html {
+    width: 1600px;
 }
 
 body {
-    width: 1357px;
-}
-
-.header {
-    color: #0013b9;
-    margin-top: 25px;
-    margin-bottom: 20px;
-    margin-left: 80px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 40px;
-    font-weight: 900;
-    letter-spacing: 1px;
+    margin: 0;
 }
 
 .topnav {
-    width: 100%;
-    border-top: 1px solid #0000007c;
-}
-
-.navbuttons {
-    margin-top: 20px;
-    margin-left: 80px;
-    margin-bottom: 40px;
-}
-
-.navbuttons a {
-    font-family: Helvetica;
-    font-size: smaller;
-    padding: 0px 20px 10px 0px;
-    color: #000;
-    text-decoration: none;
-}
-
-.parallax-cover {
-    padding: 0 80px;
-}
-
-.parallax {
-    background-image: url('http://csci571.com/hw/hw3/images/Cutlery.png');
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    margin: 0 0px;
-    padding: 60px 80px 300px;
-}
-
-.parallax-heading {
-    color: rgb(33, 33, 206);
-    font-family: 'Prata', serif;
-    font-family: 'Playfair Display', serif;
-    font-size: 80px;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.parallax-button {
-    font-size: 20px;
-    padding: 16px;
-    margin-top: 30px;
-}
-
-.content-div {
-    margin: 30px 80px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2% 16% 2% 17.5%;
+}
+
+.menu-text {
+    font-family: SUSE, Arial, Helvetica, sans-serif;
+    color: hsl(0, 0%, 35%);
+    font-size: 1.1em;
+    transform: scaleY(0.9);
+}
+
+.menu-button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .85em;
+    color: hsl(0, 0%, 80%);
+    margin-right: 23px;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    color: hsl(0 0 30%);
+}
+
+.menu-button, 
+.menu-button:visited, 
+.menu-button:hover, 
+.menu-button:focus {
+    text-decoration: none; /* Remove underline for all states */
+}
+
+
+.lawyer-container {
+    position: relative;
+}
+
+.lawyer-image {
+    width: 100%;
+    filter: brightness(80%);
+}
+
+.lawyer-text-container {
+    width: fit-content;
+    margin-left: 17%;
+    top: 15%;
+    background-color: hsl(205, 78%, 21%);
+    position: absolute;
+    padding: 40px 40px 100px;
+    font-family: Roboto, "PT Sans", sans-serif;
+    transform: scaleY(0.9);
+    font-weight: 300;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+#dont-wait {
+    transform: scaleY(0.9);
+    margin-bottom: 0;
+}
+
+#improve-your-business-today {
+    font-size: 2.5em;
+    font-weight: 300;
+    margin: 0;
+    line-height: 95%;
+    letter-spacing: -1px;
+    white-space: nowrap;
+}
+
+#hands-on-text {
+    font-size: 0.8em;
+    color: hsl(53, 100%, 50%);
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+
+.lawyer-input {
+    height: 50px;
+    margin: 15px 0;
+}
+
+.yellow-button {
+    background-color: hsl(53, 100%, 50%);
+    border: none;
+    padding: 15px 7%;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: .8em;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    width: fit-content; 
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.features-container {
+    margin: 110px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5%;
+    padding: 0 16.5%;
+}
+
+.feature-title {
+    font-family: SUSE, Arial, sans-serif;
+    font-weight: 300;
+    transform: scaleY(0.9);
+}
+
+.feature-description {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: lighter;
+    font-size: .7em;
+    color: hsl(0, 0%, 50%);
+    text-align: justify;
+    line-height: 1.7;
+}
+
+.quote-container {
+    background-color: hsl(0, 0%, 93%);
+    text-align: center;
+    padding: 150px 110px;
+}
+
+.quote-text {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 1.2em;
+    color: hsl(0, 0%, 0%);
+    font-weight: 300;
+    transform: scaleX(1.2);
+    margin: 0;
+}
+
+.quote-name {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .8em;
+}
+
+.quote-description {
+    margin: 12px 0;
+}
+
+.quote-position {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .8em;
+    color: hsl(0, 0%, 45%);
+}
+
+.prices-container {
+    position: relative;
+    padding: 3% 17%;
+}
+
+.prices-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('images/glasses.png');
+    background-size: 1600px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-color: hsla(0, 0%, 100%, 0.8);
+    background-blend-mode: lighten;
+    filter: grayscale(1);
+    z-index: -1;
+}
+
+.prices-title {
+    text-align: center;
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 1.25em;
+    font-weight: 300;
+    color: hsl(0, 0%, 30%);
+    transform: scaleX(1.1);
+    letter-spacing: -1px;
+}
+
+.price-title-description {
+    text-align: center;
+    font-family: SUSE, Roboto, Arial, sans-serif;
+    color: hsl(0, 0%, 75%);
+}
+
+.three-plans {
+    display: flex;
+    padding: 50px 0;
+    justify-content: space-between;
+}
+
+.price-selection-container {
+    background:
+        linear-gradient(0deg,
+            hsl(0 0 94%) 2%,
+            transparent 2%,
+            transparent 49%,
+            hsl(0 0 94%) 49%,
+            hsl(0 0 94%) 51%,
+            transparent 51%
+        ),
+        linear-gradient(90deg,
+            hsl(0 0 94%) 4%,
+            transparent 4%,
+            transparent 49%,
+            hsl(0 0 94%) 49%,
+            hsl(0 0 94%) 51%,
+            transparent 51%
+        ),
+        linear-gradient(45deg,
+            transparent, 
+            transparent 49%,
+            hsl(0 0 94%) 49%,
+            hsl(0 0 94%) 51%,
+            transparent 51%
+        ),
+        linear-gradient(135deg,
+            transparent, 
+            transparent 49%,
+            hsl(0 0 94%) 49%,
+            hsl(0 0 94%) 51%,
+            transparent 51%
+        );
+    background-size: 1.6em 1.6em;
+    background-color: hsl(30 0% 98%);
+    padding: 7% 8% 8% 8%;
+    text-align: center;
+}
+
+#price-plan {
+    font-family: Roboto, Arial, sans-serif;
+    transform: scaleX(1.1);
+    font-size: .9em;
+    font-weight: 300;
+    color: hsl(0 0 25%);
+    letter-spacing: -0.5px;
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+#plan-amazing-feature {
+    list-style: none;
+    min-width: min-content;
+    font-family: Roboto, Arial;
+    font-size: .9em;
+    font-weight: 300;
+    transform: scaleY(0.8);
+    color: hsl(0 0 45%);
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+.price-plan-price {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.7em;
+    color: hsl(0 0 20%);
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.price-button {
+    position: relative;
+    padding: 22px 34px;
+    border: none;
+    transform: scaleY(0.9);
+    font-size: .9em;
+    color: white;
+    letter-spacing: 1px;
+    background: hsl(205, 78%, 21%);
+    cursor: pointer;
+}
+
+.try-best-app {
+    position: relative;
+    height: 480px;
+}
+
+.background-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+}
+
+.background-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: hsla(205, 78%, 21%, 80%);
+}
+
+.best-app-textbox {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.best-app-textbox {
+    color: white;
+    font-family: Roboto, Arial, sans-serif;
+    text-align: center;
+}
+
+.try-best-app-header {
+    font-size: 1.6em;
+    font-weight: 300;
+    transform: scaleX(1.1);
+    letter-spacing: -1px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.try-best-app-tell-more {
+    font-size: .8em;
+    margin: 0;
+    margin-bottom: 25px;
+}
+
+.footer-container {
+    background-color: hsl(215deg 25% 15%);
+    height: 300px;
+    display: flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
 }
 
-.content-heading {
-    font-size: 40px;
-    font-family: 'Rozha One', serif;
-    font-weight: 600;
-    color:rgb(46, 46, 206);
-    margin-top: 50px;
-    margin-bottom: 60px;
+.footer-textbox {
+    text-align: center;
+    font-family: Roboto, Arial, sans-serif;
 }
 
-.image-caption-div {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.footer-textbox h1 {
+    color: white;
+    font-weight: 300;
+    font-size: 1.1em;
+    transform: scaleY(0.8);
+    margin: 0;
 }
 
-.content-caption {
-    font-family: 'Rozha One', serif; 
-    font-size: 30px;
-    color: rgb(33, 33, 206);
-    margin: 70px 0 70px 0;
+.footer-textbox p {
+    color: hsl(218deg 1% 56%);
+    font-size: .7em;
+    margin: .8em;
 }
 
-.image-row-div {
+.footer-icons {
+    height: 30px;
+    margin-top: 30px;
     display: flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 40px;
+    justify-content: center;
+    gap: 25%;
 }
 
-.image-row-div img {
-    max-width: 100%;
-    width: 100%;
+.footer-icons img {
+    height: 100%;
+    cursor: pointer;
 }
 
-.image-caption-div:first-child {
-    margin-right: 30px;
-}
+
+

@@ -1,0 +1,9 @@
+body {
+    text-align: center;
+}
+
+input[type=text] {
+    font-size: 1em;
+    width: 300px;
+    border: 2px solid red;
+}
