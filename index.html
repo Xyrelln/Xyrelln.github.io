@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="styles.css" rel="stylesheet" />
+    <style>
+        body {
+            text-align: center;
+        }
+
+        input[type=text] {
+            font-size: 1em;
+            width: 300px;
+            border: 2px solid red;
+        }
+    </style>
 </head>
 <body>
     <h1>CSCI 571 Assignments</h1>
@@ -16,18 +27,10 @@
 
     <script>
         document.getElementById('assignmentForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            
-            // Get the value from the input box
+            event.preventDefault();
             const assignmentName = document.getElementById('assignmentInput').value;
-            
-            // Get the current URL
             const currentUrl = window.location.href;
-            
-            // Append the assignment name to the current URL as a query parameter
-            const newUrl = currentUrl + '?assignment=' + encodeURIComponent(assignmentName);
-            
-            // Redirect to the new URL
+            const newUrl = currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + encodeURIComponent(assignmentName);
             window.location.href = newUrl;
         });
     </script>
