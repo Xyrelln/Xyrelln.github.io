@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Assignment 2</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-more.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    </head>
+    <body>
+        <div id="query-form">
+            <div id="form-header">
+                <h1>Weather Search</h1>
+                <p>Fill out form to get weather info!</p>
+            </div>
+            <form>
+                <div id="form-panel">
+                    <div class="form-wrapper">
+                        <label for="street">Street <span class="required">*</span></label>
+                        <br/>
+                        <input id="street" type="text" required> 
+                    </div>
+                    <br/>
+                    <div class="city-state-grouper">
+                        <div class="form-wrapper">
+                            <label for="city">City <span class="required">*</span></label>
+                            <br/>
+                            <input id="city" type="text" required>     
+                        </div>
+                        <div class="form-wrapper">
+                            <label for="state">State <span class="required">*</span></label>
+                            <br/>
+                            <select id="state" name="states" required>
+                                <option value="">--Select a state--</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <hr/>
+            <div id="auto-detect-div">
+                <p>Want us to auto-detect your location? Check here
+                    <span><input id="auto-detect-location" type="checkbox"></span>
+                </p> 
+                <button id="submit">SUBMIT</button>
+                <button id="clear">CLEAR</button>                                   
+            </div>
+        </div>
+
+        <div id="result-box">
+            <div id="main-result">
+                <h1 id="queried-location">Loading...</h1>
+                <div id="main-result-2nd-row">
+                    <div id="main-result-icon-name-box">
+                        <img id="main-weather-icon" src="" alt="weather-icon" />
+                        <p id="main-weather-status-name">Loading...</p>                          
+                    </div>
+                    <div id="main-result-temperature">Loading...</div>                        
+                </div>
+                <div id="main-result-3rd-row">
+                    <div id="humidity" class="main-result-attribute-block">
+                        <p>Humidity</p>
+                        <img src="./Images/humidity.png" />
+                        <p id="humidity-value"> </p>
+                    </div>
+                    <div id="pressure" class="main-result-attribute-block">
+                        <p>Pressure</p>
+                        <img src="./Images/Pressure.png" />
+                        <p id="pressure-value"> </p>
+                    </div>
+                    <div id="windspeed" class="main-result-attribute-block">
+                        <p>Wind Speed</p>
+                        <img src="./Images/Wind_Speed.png" />
+                        <p id="wind-speed-value"> </p>
+                    </div>
+                    <div id="Visibility" class="main-result-attribute-block">
+                        <p>Visibility</p>
+                        <img src="./Images/Visibility.png" />
+                        <p id="visibility-value"> </p>
+                    </div>
+                    <div id="Cloud Cover" class="main-result-attribute-block">
+                        <p>Cloud Cover</p>
+                        <img src="./Images/Cloud_Cover.png" />
+                        <p id="cloud-cover-value"> </p>
+                    </div>
+                    <div id="UV Level" class="main-result-attribute-block">
+                        <p>UV Level</p>
+                        <img src="./Images/UV_Level.png" />
+                        <p id="uv-level-value"> </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="forcasts-div">
+                <div class="forcast-grid">
+                    <div class="grid-item"><p>Date</p></div>
+                    <div class="grid-item"><p>Status</p></div>                  
+                    <div class="grid-item"><p>Temp High</p></div>
+                    <div class="grid-item"><p>Temp Low</p></div>  
+                    <div class="grid-item"><p>Wind Speed</p></div>                      
+                </div>
+            </div>
+        </div>
+
+        <div id="details-box">
+            <h1 id="daily-weather-detail">Daily Weather Details</h1>
+            <div id="details-div">
+                <div id="details-daily-header">
+                    <div id="details-daily-header-info">
+                        <h2 id="details-daily-header-date"></h2>
+                        <h2 id="details-daily-header-status"></h2>
+                        <h2 id="details-daily-header-temp"></h2>                    
+                    </div>
+                    <img id="details-daily-img" alt="details-daily-header-icon" />                    
+                </div>
+                <table id="details-daily-table"></table>
+            </div>   
+            <h1 id="weather-charts-title">Weather Charts</h1>
+            <h1 id="arrow">></h1>             
+        </div>
+ 
+        <div id="charts">
+            <div class='chart' id="temperature-ranges-chart"></div>
+            <div class='chart' id="hourly-weather-chart"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
+        
