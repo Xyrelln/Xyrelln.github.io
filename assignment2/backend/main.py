@@ -157,8 +157,8 @@ def handle_hourly_request():
 
 def get_ip_info_by_ip_addr(ip_addr: str):
     # change before production
-    # response = requests.get(f'https://ipinfo.io/{ip_addr}?token={ipinfo_api_key}')
-    response = requests.get(f'https://ipinfo.io/108.60.34.136?token={ipinfo_api_key}')
+    response = requests.get(f'https://ipinfo.io/{ip_addr}?token={ipinfo_api_key}')
+    # response = requests.get(f'https://ipinfo.io/108.60.34.136?token={ipinfo_api_key}')
     if response.status_code == 200:
         response_dict = response.json()
         return response_dict

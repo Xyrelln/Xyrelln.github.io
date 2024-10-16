@@ -1,5 +1,5 @@
-// const backendUrl = 'https://csci-571-python-435619.wl.r.appspot.com/';
-const backendUrl = 'http://localhost:5000';
+const backendUrl = 'https://csci-571-python-435619.wl.r.appspot.com/';
+// const backendUrl = 'http://localhost:5000';
 
 const weatherCodeMap = {
     1000: ["Clear", "clear_day"],
