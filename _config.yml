@@ -1,2 +1,2 @@
 exclude:
-  - ./assignment2/backend/
+  - /github/workspace/assignment2/backend/
