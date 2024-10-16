@@ -14,7 +14,7 @@
                 <h1>Weather Search</h1>
                 <p>Fill out form to get weather info!</p>
             </div>
-            <form>
+            <form id="query-form-form">
                 <div id="form-panel">
                     <div class="form-wrapper">
                         <label for="street">Street <span class="required">*</span></label>
@@ -88,15 +88,17 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </form>  
             <hr/>
             <div id="auto-detect-div">
                 <p>Want us to auto-detect your location? Check here
                     <span><input id="auto-detect-location" type="checkbox"></span>
                 </p> 
-                <button id="submit">SUBMIT</button>
-                <button id="clear">CLEAR</button>                                   
+                                
             </div>
+            <button type='submit' id="submit">SUBMIT</button>
+            <button id="clear">CLEAR</button> 
+
         </div>
 
         <div id="result-box">

@@ -8,10 +8,10 @@ import json
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# tomorrow_io_api_key = 'mE0ISl6lKIEumOrrkCnxwq4aDsaNtx1B'
+tomorrow_io_api_key = 'mE0ISl6lKIEumOrrkCnxwq4aDsaNtx1B'
 # tomorrow_io_api_key = 'l7aDY42v0zgyzC0C4wq1GV8KNQcYclf0'
 # tomorrow_io_api_key = 'j6RrAyeZiuVc0Ofe78V6dF86lc0nC74N'
-tomorrow_io_api_key = 'Kuw5MwrAVG4XsA7MxXAJHhFhZ83LZIft'
+# tomorrow_io_api_key = 'Kuw5MwrAVG4XsA7MxXAJHhFhZ83LZIft'
 
 google_api_key = 'AIzaSyAM_i1-lFFuuQZkbXt-T0kLXGGOqz3_pZk'
 ipinfo_api_key = '3f20eb330800fe'
@@ -90,6 +90,7 @@ def handle_request():
     try:
         json_data = request.get_json()
         if json_data is not None:
+            print(json_data)
             # get geo_coordinates
             if json_data.get('isAutoDetect') == True:
                 ip_addr = request.headers.get('X-Forwarded-For', request.remote_addr)

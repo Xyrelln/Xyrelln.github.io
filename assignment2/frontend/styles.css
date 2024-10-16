@@ -104,6 +104,8 @@ label {
     display: inline-block;
     text-align: center;
     transition: background 0.3s ease;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 
 #submit:hover {
@@ -121,6 +123,7 @@ label {
     display: inline-block;
     text-align: center;
     transition: background 0.3s ease;
+    margin-bottom: 20px;
 }
 
 #clear:hover {

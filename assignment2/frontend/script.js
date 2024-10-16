@@ -36,8 +36,8 @@ document.getElementById('submit').addEventListener('click', () => {
     let data;
     if (autoDetectLocation.checked) data = { isAutoDetect: true };
     else {
-        if (street === '' || city === '' || state === '') {
-            // 
+        if (!document.getElementById('street').reportValidity() || !document.getElementById('city').reportValidity() || !document.getElementById('state').reportValidity()) {
+            return;
         }
         data = {
             location: queryLocation,
@@ -398,9 +398,10 @@ const clearForm = () => {
     document.getElementById('charts').style.display = 'none';
 }
 
-document.getElementById('auto-detect-location').addEventListener('change', () => {
+document.getElementById('auto-detect-location').addEventListener('change', (event) => {
     const requiredArr = ['street', 'city', 'state'];
     requiredArr.forEach((id) => {
-        document.getElementById(id).required = !this.checked;
+        document.getElementById(id).required = !event.target.checked;
+        console.log(`${id} required: ${document.getElementById(id).required}`);
     })
 })
