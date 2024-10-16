@@ -29,6 +29,9 @@ const weatherCodeMap = {
 // [good looking name, svg name]
 
 document.getElementById('submit').addEventListener('click', () => {
+    document.getElementById('details-box').style.display = 'none';
+    document.getElementById('charts').style.display = 'none';
+    document.getElementById('result-box').style.display = 'none';
     const street = document.getElementById('street').value;
     const city = document.getElementById('city').value;
     const state = document.getElementById('state').value;

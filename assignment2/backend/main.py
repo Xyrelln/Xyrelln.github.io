@@ -93,8 +93,11 @@ def handle_request():
             print(json_data)
             # get geo_coordinates
             if json_data.get('isAutoDetect') == True:
-                ip_addr = request.headers.get('X-Forwarded-For', request.remote_addr)
+                print(request.headers.get('X-Forwarded-For', request.remote_addr.split(',')))
+                ip_addr = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0]
+                print(ip_addr)
                 location_info = get_ip_info_by_ip_addr(ip_addr=ip_addr)
+                print(location_info)
                 geo_coordinates = location_info['loc']
             else:
                 location = json_data.get('location')
@@ -126,8 +129,10 @@ def handle_hourly_request():
         if json_data is not None:
             # get geo_coordinates
             if json_data.get('isAutoDetect') == True:
-                ip_addr = request.headers.get('X-Forwarded-For', request.remote_addr)
+                ip_addr = request.headers.get('X-Forwarded-For', request.remote_addr).split(',')[0]
+                print('===> getting ip info')
                 location_info = get_ip_info_by_ip_addr(ip_addr=ip_addr)
+                print('===> got ip info')
                 geo_coordinates = location_info['loc']
             else:
                 location = json_data.get('location')
