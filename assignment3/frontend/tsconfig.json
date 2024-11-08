@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+  "compilerOptions": {
+    "jsx": "react", // or "react-jsx" for React 17+ with the new JSX transform
+    "strict": true, // or any other TypeScript settings you prefer
+  }
+}

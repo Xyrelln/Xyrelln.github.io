@@ -1,0 +1,26 @@
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+    max-width: 1000px;
+    width: 95%;
+
+    h5 {
+        text-align: center;
+    }
+
+    img {
+        height: 30px;
+    }
+
+    .icon-text-div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        p {
+            margin: 0;
+        }
+    }
+}

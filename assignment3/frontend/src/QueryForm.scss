@@ -1,0 +1,46 @@
+#div-main-query {
+    margin-inline: auto;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 80%;
+    background: hsl(0, 0%, 98%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .form-label {
+        text-align: center;
+    }
+
+    Form {
+        width: 95%;
+        margin-top: 1rem;
+        margin-inline: auto;
+    }
+    
+    .required {
+        &:after { 
+            content: '*';
+            color: red;
+            margin-left: 2px;
+        }
+    }
+
+    .autodetect-location {
+        width: fit-content;
+        margin-inline: auto;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+
+        .clear {
+            background: white;
+            border: 1px solid rgb(113, 113, 113);
+            color: black;
+            margin-left: 6px;
+        }
+    }
+}
+
