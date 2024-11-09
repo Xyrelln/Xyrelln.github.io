@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 50px;
-    max-width: 1000px;
     width: 95%;
 
     h5 {
@@ -12,6 +11,19 @@
 
     img {
         height: 30px;
+    }
+
+    .main-results-buttons {
+        justify-content: end;
+    }
+
+    .detail-buttons {
+        margin-bottom: 10px;
+        justify-content: space-between;
+    
+        Button {
+            padding: 5px 10px 7px 11px;
+        }
     }
 
     .icon-text-div {
@@ -23,4 +35,6 @@
             margin: 0;
         }
     }
+
+    
 }

@@ -1,11 +1,16 @@
 import { DailyDetailData } from "./types";
 import { BACKEND_URL } from "../config";
 import { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import { GoogleMapsWrapper } from "./GoogleMapsWrapper";
+import { GoogleMaps } from "./GoogleMaps";
+import "./DailyDetail.scss";
 
 interface DailyDetailProps {
     location: string;
     date: string;
+    detailData: DailyDetailData | null;
+    setDetailData: React.Dispatch<React.SetStateAction<DailyDetailData | null>>;
 }
 
 const weatherCodeMap: { [key: number]: [string, string] } = {
@@ -34,8 +39,8 @@ const weatherCodeMap: { [key: number]: [string, string] } = {
     8000: ["Thunderstorm", "tstorm"]
 };
 
-const DailyDetail: React.FC<DailyDetailProps> = ({ location, date }) => {
-    const [detailData, setDetailData] = useState<DailyDetailData | null>(null);
+const DailyDetail: React.FC<DailyDetailProps> = ({ location, date, detailData, setDetailData }) => {
+    
     useEffect(() => {
         fetch(`${BACKEND_URL}/daily-detail`, {
             method: "POST",
@@ -43,17 +48,12 @@ const DailyDetail: React.FC<DailyDetailProps> = ({ location, date }) => {
             body: JSON.stringify({ location: location, date: date })
         })
         .then(response => response.json())
-        .then(data => {
-            console.log(JSON.stringify(data));
-            setDetailData(data);
-        })
+        .then(data => setDetailData(data))
         .catch(error => console.error("Error fetching daily detail data:", error));
-    }, [location, date]); 
+    }, [location, date]);
+
     return(
-        <div className="daily-detail-div">
-            <p>{location}</p>
-            <p>{date}</p>
-            <p>{JSON.stringify(detailData)}</p>
+        <div className="daily-detail">
             {detailData ? (
                 <Table striped>
                     <tbody>
@@ -100,8 +100,12 @@ const DailyDetail: React.FC<DailyDetailProps> = ({ location, date }) => {
                     </tbody>
                 </Table>
             ) : (
-                <p>Loading data...</p>
+                <p>Loading Daily Detail...</p>
             )}
+
+            <GoogleMapsWrapper>
+                <GoogleMaps center={{ lat: +location.split(',')[0], lng: +location.split(',')[1] }} />
+            </GoogleMapsWrapper>
         </div>
         )
 };

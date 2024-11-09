@@ -1,4 +1,4 @@
-import { TimelineData, MeteogramData } from "./types";
+import { TimelineData, MeteogramData, DailyDetailData } from "./types";
 import './ResultsPanel.scss';
 import Table from 'react-bootstrap/Table';
 import Tabs from 'react-bootstrap/Tabs';
@@ -13,6 +13,8 @@ import { BACKEND_URL } from "../config";
 import { useEffect, useState } from 'react';
 import Meteogram from "./Meteogram";
 import DailyDetail from "./DailyDetail";
+import { Button } from "react-bootstrap";
+import { BsTwitterX } from "react-icons/bs";
 
 HighchartsMore(Highcharts);
 WindbarbModule(Highcharts);
@@ -68,7 +70,9 @@ const formatDate = (dateString: string): string => {
 
 const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData, setMeteogramData, forcastCityAndState }) => {
     if (timelineData == null) return;
-    const [showingDetails, setShowingDetails] = useState<boolean>(true);
+    const [showingDetails, setShowingDetails] = useState<boolean>(false);
+    const [detailData, setDetailData] = useState<DailyDetailData | null>(null);
+    const [detailDate, setDetailDate] = useState<string>(timelineData.data.timelines[0].startTime);
 
     useEffect(() => {
         if (timelineData) {
@@ -90,6 +94,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
         xaxis.push(formatDate(interval.startTime).split(', ')[1]);
         temperatureRange.push([interval.values.temperatureMax, interval.values.temperatureMin]);
     });
+
     const dailyTempChartOptions = {
         chart: {
             type: 'arearange',
@@ -134,12 +139,47 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
         }]
     };
 
+    const handleDetailPanelToggle = () => {
+        setShowingDetails(!showingDetails);
+    };
+
+    const handleListButton = () => {
+        handleDetailPanelToggle();
+    };
+
+    const postToTwitter = () => {
+        if (!detailData) return;
+        const text = `Today's weather in ${forcastCityAndState} on ${formatDate(detailDate)} is ${detailData.data.timelines[0].intervals[0].values.temperatureApparent}°F and the conditions are ${weatherCodeMap[detailData.data.timelines[0].intervals[0].values.weatherCode]?.[0]} #CSCI571WeatherForcast`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+        window.open(twitterUrl, "_blank");
+    };
+
+    const handleDateClick = (date: string) => {
+        if (detailDate == '' || date !== detailDate) {
+            fetch(`${BACKEND_URL}/daily-detail`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ location: timelineData.location, date: date })
+            })
+            .then(response => response.json())
+            .then(data => {
+                setDetailData(data);
+                setDetailDate(date);
+                setShowingDetails(true);
+            })
+            .catch(error => console.error("Error fetching daily detail data:", error));
+        }
+    };
+
     return (
-        <>        
+        <div className="result">
         {!showingDetails 
             ? 
-            <div className='result slide-window slide-left'>
+            <div className='slide-window slide-left'>
                 <h5>Forecast at {forcastCityAndState}</h5>
+                <div className="main-results-buttons d-flex">
+                    <Button variant="link" onClick={handleDetailPanelToggle}>Details {'>'}</Button>  
+                </div>
                 <Tabs defaultActiveKey="day-view" id="forecast-tabs">
                     <Tab eventKey="day-view" title="Day View">
                         <Table>
@@ -157,7 +197,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
                             {timelineData.data.timelines[0].intervals.map((interval, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td><a href="#">{formatDate(interval.startTime)}</a></td>
+                                    <td><a href="#detail-date" onClick={() => handleDateClick(interval.startTime)}>{formatDate(interval.startTime)}</a></td>
                                     <td>
                                         <div className="icon-text-div">
                                             <Image src={`${SVG_PATH}/${weatherCodeMap[interval.values.weatherCode]?.[1]}.svg`} alt={String(interval.values.weatherCode)} />
@@ -183,10 +223,18 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
                 </Tabs>
             </div>
             :
-            <div>
-                <DailyDetail location={timelineData.location} date={timelineData.data.timelines[0].startTime} />
-            </div>}
-        </>
+            <div className='slide-window slide-right'>
+                <div className="detail-buttons d-flex">
+                    <Button variant="outline-secondary" onClick={handleListButton}>{'<'} List</Button>
+                    <h4 id="detail-date">{formatDate(detailDate)}</h4>
+                    <Button variant="outline-dark" onClick={postToTwitter} >
+                        <BsTwitterX />
+                    </Button>
+                </div>
+                <DailyDetail location={timelineData.location} date={detailDate} detailData={detailData} setDetailData={setDetailData} />
+            </div>
+        }
+        </div>
 
     );
 }
