@@ -175,7 +175,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
         <div className="result">
         {!showingDetails 
             ? 
-            <div className='slide-window slide-left'>
+            <div className={`slide-window ${showingDetails ? "slide-left" : "slide-in-right"}`}>
                 <h5>Forecast at {forcastCityAndState}</h5>
                 <div className="main-results-buttons d-flex">
                     <Button variant="link" onClick={handleDetailPanelToggle}>Details {'>'}</Button>  
@@ -223,7 +223,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
                 </Tabs>
             </div>
             :
-            <div className='slide-window slide-right'>
+            <div className={`slide-window ${showingDetails ? "slide-in-left" : "slide-right"}`}>
                 <div className="detail-buttons d-flex">
                     <Button variant="outline-secondary" onClick={handleListButton}>{'<'} List</Button>
                     <h4 id="detail-date">{formatDate(detailDate)}</h4>

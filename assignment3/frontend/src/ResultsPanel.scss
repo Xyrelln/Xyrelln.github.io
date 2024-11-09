@@ -1,5 +1,6 @@
 .result {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     margin-top: 50px;
@@ -25,6 +26,31 @@
             padding: 5px 10px 7px 11px;
         }
     }
+
+    .slide-window {
+        transition: transform 0.5s ease;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    
+    .slide-right {
+        transform: translateX(100%);  // Start off to the right
+    }
+
+    .slide-left {
+        transform: translateX(-100%);  // Start off to the left
+    }
+
+    // Visible positions
+    .slide-in-right {
+        transform: translateX(0);  // Slides in from the right
+    }
+
+    .slide-in-left {
+        transform: translateX(0);  // Slides in from the left
+    }
+    
 
     .icon-text-div {
         display: flex;

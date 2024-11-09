@@ -1,6 +1,7 @@
 const FavoritesPanel = () => {
     return (
         <>
+            
         </>
     )
 }
