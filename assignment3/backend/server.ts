@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import ClimaCellAPI from 'js-climacell-api/node'; 
-import { TOMORROW_IO_API_KEY, IPINFO_API_KEY, MONGODB_URI } from './config';
+import { TOMORROW_IO_API_KEY, IPINFO_API_KEY, GOOGLE_API_KEY } from './config';
 import { connectToDatabase } from './services/database.service';
 import { favoritesRouter } from './routes/favorites.router';
 
@@ -70,7 +70,7 @@ app.post('/weather-timeline', (request: Request, response: Response) => {
         endTime: 'nowPlus5d'
     })
     .then(data => {
-        if (data.message != null) response.status(200).json();
+        if (data.message) response.status(200).json(data);
         response.status(200).json(data);
     })
     .catch(err => {
@@ -140,3 +140,13 @@ app.post('/daily-detail', (request: Request, response: Response) => {
     });
 });
 
+app.get('/autocomplete/:input', (request: Request, response: Response) => {
+    const input = request.params?.input;
+    fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(cities)&key=${GOOGLE_API_KEY}`)
+    .then(fetchRes => fetchRes.json())
+    .then(data => response.status(200).json(data))
+    .catch(err => {
+        console.error("Fetch error when fetching autocomplete:", err);
+        response.status(500).send("Internal Server Error: autocomplete");
+    });
+})

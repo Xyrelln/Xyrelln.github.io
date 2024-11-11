@@ -10,11 +10,12 @@ function App() {
   const [meteogramData, setMeteogramData] = useState<MeteogramData | null>(null);
   const [showResultPanel, setShowResultPanel] = useState<boolean>(false);
   const [forcastCityAndState, setForcastCityAndState] = useState<string>('');
+  const [isTomorrowIOError, setIsTomorrowIOError] = useState<boolean>(false);
 
   return (
     <>
-      <QueryForm setTimelineData={setTimelineData} setShowResultPanel={setShowResultPanel} setForcastCityAndState={setForcastCityAndState} />
-      <MainPanel timelineData={timelineData} meteogramData={meteogramData} setMeteogramData={setMeteogramData} showResultPanel={showResultPanel} setShowResultPanel={setShowResultPanel} forcastCityAndState={forcastCityAndState} />
+      <QueryForm setTimelineData={setTimelineData} setShowResultPanel={setShowResultPanel} setForcastCityAndState={setForcastCityAndState} setIsTomorrowIOError={setIsTomorrowIOError} />
+      <MainPanel timelineData={timelineData} meteogramData={meteogramData} setMeteogramData={setMeteogramData} forcastCityAndState={forcastCityAndState} isTomorrowIOError={isTomorrowIOError} />
     </>
   )
 }

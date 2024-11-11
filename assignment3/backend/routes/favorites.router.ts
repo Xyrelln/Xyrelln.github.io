@@ -95,3 +95,31 @@ favoritesRouter.delete("/:id", async (req: Request, res: Response) => {
         res.status(500).send('delete from db failed');
     }
 });
+
+
+favoritesRouter.delete("/", async (req: Request, res: Response) => {
+    const { city, state } = req.body;
+
+    if (!city || !state) {
+        res.status(400).send("Bad Request: missing city or state");
+    }
+
+    try {
+        const query = { city: city, state: state };
+        const result = await collections.favorites?.deleteOne(query);
+
+        if (result && result.deletedCount) {
+            res.status(202).send(`Successfully removed favorite with city: ${city} and state: ${state}`);
+        } else if (!result) {
+            res.status(400).send(`Failed to remove favorite with city: ${city} and state: ${state}`);
+        } else if (!result.deletedCount) {
+            res.status(404).send(`Favorite with city: ${city} and state: ${state} does not exist`);
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send(error.message);
+        } else {
+            res.status(500).send("delete from db failed");
+        }
+    }
+});

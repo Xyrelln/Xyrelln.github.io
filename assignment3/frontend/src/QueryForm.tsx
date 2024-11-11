@@ -1,25 +1,96 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './QueryForm.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BACKEND_URL, GOOGLE_API_KEY } from '../config.ts';
-import { TimelineData } from './types.ts';
+import { TimelineData, AutoCompleteSuggestions } from './types.ts';
 
 
 interface QueryFormProps {
     setTimelineData: React.Dispatch<React.SetStateAction<TimelineData | null>>;
     setShowResultPanel: React.Dispatch<React.SetStateAction<boolean>>;
     setForcastCityAndState: React.Dispatch<React.SetStateAction<string>>;
+    setIsTomorrowIOError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPanel, setForcastCityAndState }) => {
+const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPanel, setForcastCityAndState, setIsTomorrowIOError }) => {
     const [isAutodetect, setIsAutodetect] = useState<boolean>(false);
     const [street, setStreet] = useState<string>('');
     const [city, setCity] = useState<string>('');
     const [state, setState] = useState<string>('');
     const [streetError, setStreetError] = useState<string>('');
     const [cityError, setCityError] = useState<string>('');
+    const [autoCompleteSuggestions, setAutoCompleteSuggestions] = useState<AutoCompleteSuggestions | null>(null);
+    const [haveSelectedState, setHaveSelectedState] = useState<boolean>(false);
+    const uniqueCities = new Set<string>();
+    const [filteredStates, setFilteredStates] = useState<string[]>([]);
+    const [fetchedIpLocInfo, setFetchedIpLocInfo] = useState<string>('');
 
+    const states = [
+        { value: 'AL', label: 'Alabama' },
+        { value: 'AK', label: 'Alaska' },
+        { value: 'AZ', label: 'Arizona' },
+        { value: 'AR', label: 'Arkansas' },
+        { value: 'CA', label: 'California' },
+        { value: 'CO', label: 'Colorado' },
+        { value: 'CT', label: 'Connecticut' },
+        { value: 'DE', label: 'Delaware' },
+        { value: 'DC', label: 'District Of Columbia' },
+        { value: 'FL', label: 'Florida' },
+        { value: 'GA', label: 'Georgia' },
+        { value: 'HI', label: 'Hawaii' },
+        { value: 'ID', label: 'Idaho' },
+        { value: 'IL', label: 'Illinois' },
+        { value: 'IN', label: 'Indiana' },
+        { value: 'IA', label: 'Iowa' },
+        { value: 'KS', label: 'Kansas' },
+        { value: 'KY', label: 'Kentucky' },
+        { value: 'LA', label: 'Louisiana' },
+        { value: 'ME', label: 'Maine' },
+        { value: 'MD', label: 'Maryland' },
+        { value: 'MA', label: 'Massachusetts' },
+        { value: 'MI', label: 'Michigan' },
+        { value: 'MN', label: 'Minnesota' },
+        { value: 'MS', label: 'Mississippi' },
+        { value: 'MO', label: 'Missouri' },
+        { value: 'MT', label: 'Montana' },
+        { value: 'NE', label: 'Nebraska' },
+        { value: 'NV', label: 'Nevada' },
+        { value: 'NH', label: 'New Hampshire' },
+        { value: 'NJ', label: 'New Jersey' },
+        { value: 'NM', label: 'New Mexico' },
+        { value: 'NY', label: 'New York' },
+        { value: 'NC', label: 'North Carolina' },
+        { value: 'ND', label: 'North Dakota' },
+        { value: 'OH', label: 'Ohio' },
+        { value: 'OK', label: 'Oklahoma' },
+        { value: 'OR', label: 'Oregon' },
+        { value: 'PA', label: 'Pennsylvania' },
+        { value: 'RI', label: 'Rhode Island' },
+        { value: 'SC', label: 'South Carolina' },
+        { value: 'SD', label: 'South Dakota' },
+        { value: 'TN', label: 'Tennessee' },
+        { value: 'TX', label: 'Texas' },
+        { value: 'UT', label: 'Utah' },
+        { value: 'VT', label: 'Vermont' },
+        { value: 'VA', label: 'Virginia' },
+        { value: 'WA', label: 'Washington' },
+        { value: 'WV', label: 'West Virginia' },
+        { value: 'WI', label: 'Wisconsin' },
+        { value: 'WY', label: 'Wyoming' }
+    ];
+
+    useEffect(() => {
+        if (city) {
+            autoComplete(city);
+        } else {
+            setAutoCompleteSuggestions(null);
+        }
+    }, [city]);
+
+    const checkTomorrowIOPayloadError = (jsonObject: TimelineData) => {
+        setIsTomorrowIOError(typeof jsonObject?.data?.timelines === 'undefined');
+    }
 
     const fetchIpinfo = async () => {
         try {
@@ -29,6 +100,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
             }
             const data = await fetchRes.json();
             setForcastCityAndState(data.city + ', ' + data.region);
+            setFetchedIpLocInfo(data.loc);
             return data;
         } catch (err) {
             console.error('Error fetching IP info:', err);
@@ -37,12 +109,11 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
     };
 
     const fetchTimelineWithAutodetect = async () => {
-        const data = await fetchIpinfo();
-        if (!data || !data.loc) {
+        if (!fetchedIpLocInfo) {
             console.warn("Warning: No data.loc found when fetchTimelineWithAutodetect()");
             return;
         }
-        const latlng = data.loc; // "34.0030,-118.2863"
+        const latlng = fetchedIpLocInfo; // "34.0030,-118.2863"
         
         try {
             const response = await fetch(`${BACKEND_URL}/weather-timeline`, {
@@ -99,6 +170,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
     
             const timelineData = await response.json();
             timelineData['location'] = latlng;
+            setForcastCityAndState(city + ', ' + state);
             console.log(timelineData);
             return timelineData;
         } catch (err) {
@@ -133,6 +205,26 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
             : await fetchTimelineWithAddress();
         setTimelineData(timelineData);
         setShowResultPanel(true);
+        checkTomorrowIOPayloadError(timelineData);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const query = event.target.value.toLowerCase();
+        setState(event.target.value);
+        const filtered = states
+          .filter((state) => state.label.toLowerCase().includes(query.toLowerCase()))
+          .map((state) => state.label);
+        setFilteredStates(filtered);
+    };
+
+    const autoComplete = async (input: string) => {
+        try {
+            const response = await fetch(`${BACKEND_URL}/autocomplete/${input}`);
+            const data = await response.json();
+            setAutoCompleteSuggestions(data);
+        } catch (error) {
+            console.error("Error fetching autocomplete suggestions:", error);
+        }
     };
 
     return (
@@ -167,78 +259,54 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
                             required
                             isInvalid={!!cityError && !isAutodetect}
                             disabled={isAutodetect}
+                            list="city-suggestions"
                         />
                         <Form.Control.Feedback type="invalid">
                             {cityError}
                         </Form.Control.Feedback>
+                        <datalist id="city-suggestions">
+                        {
+                            autoCompleteSuggestions?.predictions.map((prediction, index) => {
+                            const city = prediction.terms[0].value;
+                            if (!uniqueCities.has(city)) {
+                                uniqueCities.add(city);
+                                return <option key={index} value={city} />;
+                            }
+                            return null;
+                        })}
+                        </datalist>
                     </div>
                 </Form.Group>
-                <Form.Group className='row' controlId='formState'>
-                    <Form.Label className='col-md-3 form-label required'>State</Form.Label>
-                    <div className='col-md-4'>
-                        <Form.Select required value={state} onChange={(e) => setState(e.target.value)} disabled={isAutodetect}>
-                            <option value=''>Select your state</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Delaware</option>
-                            <option value="DC">District Of Columbia</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="HI">Hawaii</option>
-                            <option value="ID">Idaho</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IN">Indiana</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WA">Washington</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WY">Wyoming</option>
-                        </Form.Select>
-                    </div>
+
+                <Form.Group className="row" controlId="formState">
+                <Form.Label className="col-md-3 form-label required">State</Form.Label>
+                <div className="col-md-4">
+                    <Form.Control
+                    type="text"
+                    value={state}
+                    onChange={(e) => {handleInputChange(e); setHaveSelectedState(true); }}
+                    required
+                    isInvalid={state === '' && haveSelectedState}
+                    disabled={isAutodetect}
+                    list="state-suggestions"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                    {state === '' && haveSelectedState ? 'Please select a state' : ''}
+                    </Form.Control.Feedback>
+                    <datalist id="state-suggestions">
+                    {filteredStates.map((stateLabel, index) => (
+                        <option key={index} value={stateLabel} />
+                    ))}
+                    </datalist>
+                </div>
                 </Form.Group>
                 <hr />
                 <Form.Group className='autodetect-location d-flex justify-content-center' controlId='autodetect-location'>
                     <Form.Label className='me-4 required'>Autodetect Location</Form.Label>
-                    <Form.Check type='checkbox' label='Current Location' onChange={handleAutodetectClick} />
+                    <Form.Check type='checkbox' label='Current Location' onChange={handleAutodetectClick} onClick={fetchIpinfo} />
                 </Form.Group>
                 <div className='buttons'>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" disabled={isAutodetect && fetchedIpLocInfo === ''} >
                         🔍 Search
                     </Button>
                     <Button className="clear" type="button" onClick={() => {

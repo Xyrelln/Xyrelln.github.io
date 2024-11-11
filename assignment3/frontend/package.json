@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@googlemaps/react-wrapper": "^1.1.42",
+    "@mui/material": "^6.1.6",
     "@popperjs/core": "^2.11.8",
+    "@vis.gl/react-google-maps": "^1.4.0",
     "bootstrap": "^5.3.3",
     "highcharts": "^11.4.8",
     "highcharts-more": "^0.1.7",

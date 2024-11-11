@@ -1,7 +1,7 @@
 import { DailyDetailData } from "./types";
 import { BACKEND_URL } from "../config";
-import { useState, useEffect } from "react";
-import { Button, Table } from "react-bootstrap";
+import { useEffect } from "react";
+import { Table } from "react-bootstrap";
 import { GoogleMapsWrapper } from "./GoogleMapsWrapper";
 import { GoogleMaps } from "./GoogleMaps";
 import "./DailyDetail.scss";
