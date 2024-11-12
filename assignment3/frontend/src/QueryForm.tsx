@@ -11,9 +11,10 @@ interface QueryFormProps {
     setShowResultPanel: React.Dispatch<React.SetStateAction<boolean>>;
     setForcastCityAndState: React.Dispatch<React.SetStateAction<string>>;
     setIsTomorrowIOError: React.Dispatch<React.SetStateAction<boolean>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPanel, setForcastCityAndState, setIsTomorrowIOError }) => {
+const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPanel, setForcastCityAndState, setIsTomorrowIOError, setLoading }) => {
     const [isAutodetect, setIsAutodetect] = useState<boolean>(false);
     const [street, setStreet] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -25,6 +26,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
     const uniqueCities = new Set<string>();
     const [filteredStates, setFilteredStates] = useState<string[]>([]);
     const [fetchedIpLocInfo, setFetchedIpLocInfo] = useState<string>('');
+
 
     const states = [
         { value: 'AL', label: 'Alabama' },
@@ -109,8 +111,10 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
     };
 
     const fetchTimelineWithAutodetect = async () => {
+        setLoading(true);
         if (!fetchedIpLocInfo) {
             console.warn("Warning: No data.loc found when fetchTimelineWithAutodetect()");
+            setLoading(false);
             return;
         }
         const latlng = fetchedIpLocInfo; // "34.0030,-118.2863"
@@ -131,14 +135,17 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
             const timelineData = await response.json();
             timelineData['location'] = latlng;
             console.log(timelineData);
+            setLoading(false); 
             return timelineData;
         } catch (err) {
             console.error(err);
+            setLoading(false); 
             return null;
         }
     };    
 
     const fetchTimelineWithAddress = async () => {
+        setLoading(true); 
         try {
             // fetch google geolocation for latlng, return "lat, lng"
             const fetchLatlng = async (fullQueryAddress: string) => {
@@ -172,9 +179,11 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
             timelineData['location'] = latlng;
             setForcastCityAndState(city + ', ' + state);
             console.log(timelineData);
+            setLoading(false); 
             return timelineData;
         } catch (err) {
             console.error(err);
+            setLoading(false); 
             return null;
         }
     };
@@ -198,6 +207,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         console.log('submitted');
         if (streetError || cityError) return;
         let timelineData = isAutodetect 
@@ -206,6 +216,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
         setTimelineData(timelineData);
         setShowResultPanel(true);
         checkTomorrowIOPayloadError(timelineData);
+        setLoading(false); 
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

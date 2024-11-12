@@ -1,5 +1,7 @@
-import { Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { BACKEND_URL } from '../config';
+import { FaTrash } from 'react-icons/fa';
+import './FavoritesPanel.scss';
 
 interface FavoritesPanelProps {
     favorites: { city: string, state: string }[];
@@ -29,15 +31,15 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ favorites, setFavorites
   };
 
   return (
-    <div>
+    <div style={{width: '80%'}}>
       <h2>Favorite Cities and States</h2>
-      <Table striped bordered hover responsive>
+      <Table hover responsive>
         <thead>
           <tr>
             <th>#</th>
             <th>City</th>
             <th>State</th>
-            <th>Action</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -47,9 +49,7 @@ const FavoritesPanel: React.FC<FavoritesPanelProps> = ({ favorites, setFavorites
               <td>{fav.city}</td>
               <td>{fav.state}</td>
               <td>
-                <Button variant="danger" onClick={() => handleDelete(fav.city, fav.state)}>
-                  Delete
-                </Button>
+                <FaTrash onClick={() => handleDelete(fav.city, fav.state)}/>
               </td>
             </tr>
           ))}

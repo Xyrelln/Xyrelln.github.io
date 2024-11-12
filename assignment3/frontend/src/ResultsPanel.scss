@@ -62,5 +62,8 @@
         }
     }
 
-    
+    #forecast-tabs {
+        display: flex;
+        justify-content: flex-end;
+    }
 }

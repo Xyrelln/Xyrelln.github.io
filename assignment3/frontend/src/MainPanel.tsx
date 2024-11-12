@@ -6,6 +6,8 @@ import './MainPanel.scss';
 import { TimelineData, MeteogramData } from './types';
 import { BACKEND_URL } from '../config';
 import { Alert } from 'react-bootstrap';
+import { ProgressBar } from 'react-bootstrap';
+
 
 interface MainPanelProps {
     timelineData: TimelineData | null;
@@ -13,9 +15,10 @@ interface MainPanelProps {
     setMeteogramData: React.Dispatch<React.SetStateAction<MeteogramData | null>>;
     forcastCityAndState: string;
     isTomorrowIOError: boolean;
+    loading: boolean;
 }
 
-const MainPanel: React.FC<MainPanelProps> = ({ timelineData, meteogramData, setMeteogramData, forcastCityAndState, isTomorrowIOError }) => {
+const MainPanel: React.FC<MainPanelProps> = ({ timelineData, meteogramData, setMeteogramData, forcastCityAndState, isTomorrowIOError, loading }) => {
     const [selectedTab, setSelectedTab] = useState<string>("results");
     const [isCurrentFav, setIsCurrentFav] = useState<boolean>(false);
     const [favorites, setFavorites] = useState<{ city: string, state: string}[]>([]);
@@ -68,6 +71,8 @@ const MainPanel: React.FC<MainPanelProps> = ({ timelineData, meteogramData, setM
             </Alert>
             : 
             <div className='main-panel'>
+                {loading && <ProgressBar animated now={100} label="Loading..." className="mb-3 margin-top-10" />}
+
                 <Nav variant="pills" activeKey={selectedTab} onSelect={(selectedKey) => setSelectedTab(selectedKey!)}>
                     <Nav.Item>
                         <Nav.Link eventKey="results">Results</Nav.Link>
