@@ -20,7 +20,7 @@ export const GoogleMaps: React.FC<GoogleMapsProps> = ({ center }) => {
           mapId: '4504f8b37365c3d0',
       });
   
-      const marker = new AdvancedMarkerElement({
+      new AdvancedMarkerElement({
           map,
           position: center,
       });

@@ -8,13 +8,12 @@ import { TimelineData, AutoCompleteSuggestions } from './types.ts';
 
 interface QueryFormProps {
     setTimelineData: React.Dispatch<React.SetStateAction<TimelineData | null>>;
-    setShowResultPanel: React.Dispatch<React.SetStateAction<boolean>>;
     setForcastCityAndState: React.Dispatch<React.SetStateAction<string>>;
     setIsTomorrowIOError: React.Dispatch<React.SetStateAction<boolean>>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPanel, setForcastCityAndState, setIsTomorrowIOError, setLoading }) => {
+const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setForcastCityAndState, setIsTomorrowIOError, setLoading }) => {
     const [isAutodetect, setIsAutodetect] = useState<boolean>(false);
     const [street, setStreet] = useState<string>('');
     const [city, setCity] = useState<string>('');
@@ -196,7 +195,7 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
         }
     };
 
-    const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>, setError: React.Dispatch<React.SetStateAction<string>>) => {
+    const handleOnBlur = (event: any, setError: React.Dispatch<React.SetStateAction<string>>) => {
         if (isAutodetect) return;
         const inputValue = event.target.value;
         const isValid = /^[a-zA-Z0-9\s]*$/.test(inputValue);
@@ -214,12 +213,11 @@ const QueryForm: React.FC<QueryFormProps> = ({ setTimelineData, setShowResultPan
             ? await fetchTimelineWithAutodetect()
             : await fetchTimelineWithAddress();
         setTimelineData(timelineData);
-        setShowResultPanel(true);
         checkTomorrowIOPayloadError(timelineData);
         setLoading(false); 
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: any) => {
         const query = event.target.value.toLowerCase();
         setState(event.target.value);
         const filtered = states

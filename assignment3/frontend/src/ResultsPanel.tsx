@@ -20,7 +20,7 @@ HighchartsMore(Highcharts);
 WindbarbModule(Highcharts);
 Vector(Highcharts);
 
-const SVG_PATH = 'src/assets/weather_codes_svg';
+const SVG_PATH = '/assets/weather_codes_svg';
 
 interface ResultsPanelProps {
     timelineData: TimelineData | null;
@@ -76,7 +76,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ timelineData, meteogramData
     if (timelineData == null) return;
     const [showingDetails, setShowingDetails] = useState<boolean>(false);
     const [detailData, setDetailData] = useState<DailyDetailData | null>(null);
-    const [detailDate, setDetailDate] = useState<string>(timelineData.data.timelines[0].startTime);
+    const [detailDate, setDetailDate] = useState<string>('');
 
     useEffect(() => {
         if (timelineData) {

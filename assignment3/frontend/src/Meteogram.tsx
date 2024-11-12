@@ -239,7 +239,6 @@ class MeteogramChart {
   }
 
   parseMeteogramData() {
-    let pointStart: number | undefined;
 
     if (!this.json) {
       return this.error();
@@ -258,9 +257,6 @@ class MeteogramChart {
 
       this.pressures.push({ x, y: node.values.pressureSurfaceLevel });
 
-      if (i === 0) {
-        pointStart = (x + to) / 2;
-      }
     });
 
     this.createChart();

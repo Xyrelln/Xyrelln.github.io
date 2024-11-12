@@ -1,6 +1,6 @@
 // config.ts
 
-const BACKEND_URL: string = 'https://csci-571-python-435619.wl.r.appspot.com';
+const BACKEND_URL: string = 'https://assignment3-441501.wl.r.appspot.com';
 const GOOGLE_API_KEY: string = 'AIzaSyAM_i1-lFFuuQZkbXt-T0kLXGGOqz3_pZk';
 
 export {

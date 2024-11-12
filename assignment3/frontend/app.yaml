@@ -1,0 +1,9 @@
+runtime: nodejs18
+entrypoint: npm run build
+
+handlers:
+  - url: /assets
+    static_dir: dist/assets
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
