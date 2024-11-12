@@ -54,7 +54,7 @@ class MeteogramChart {
     
     }
 
-    // chart.get('windbarbs')?.markerGroup.attr({
+    // chart.get('windbarbs')?.attr({
     //   translateX: chart.get('windbarbs')?.markerGroup.translateX + 8,
     // });
   }
@@ -74,8 +74,8 @@ class MeteogramChart {
         },
       },
       title: {
-        text: 'Meteogram',
-        align: 'left',
+        text: 'Hourly Weather (For Next 5 Days)',
+        align: 'center',
       },
       xAxis: [
         {
@@ -131,25 +131,62 @@ class MeteogramChart {
           opposite: true,
         },
       ],
+      legend: {
+        enabled: false,
+      },
       series: [
         {
           name: 'Temperature',
           data: this.temperatures,
           type: 'spline',
-          color: '#FF3333',
+          color: '#f3373b',
           negativeColor: '#48AFE8',
+          zIndex: 5
         },
         {
           name: 'Air pressure',
-          color: 'blue',
+          color: '#e1af45',
           data: this.pressures,
+          marker: {
+            enabled: false,
+          },
+          shadow: false,
+          tooltip: {
+            valueSuffix: " hPa",
+          },
+          dashStyle: "shortdot",
           yAxis: 1,
+          zIndex: 4
         },
         {
           name: 'Humidity',
           type: 'column',
-          color: 'black',
+          color: '#5fb9cf',
           data: this.humidity,
+          pointWidth: 7,
+          marker: {
+            enabled: false,
+          },
+          shadow: false,
+          tooltip: {
+            valueSuffix: " hPa",
+          },
+          dashStyle: "shortdot",
+          dataLabels: {
+            enabled: true,
+            inside: false, 
+            align: 'center',
+            verticalAlign: 'bottom',
+            crop: false,
+            overflow: 'none',
+            style: {
+              color: '#333',
+              fontSize: '10px',
+              fontWeight: 'bold',
+              textOutline: 'none'
+            }
+          },
+          yAxis: 0,
         },
         {
           name: 'Wind',
@@ -196,12 +233,6 @@ class MeteogramChart {
       const x = Date.parse(node.startTime);
       const to = x + 36e5;
 
-      if (to > (pointStart || 0) + 48 * 36e5) {
-        return;
-      }
-
-    console.log("Temperature:", node.values.temperature);
-
       this.humidity.push({ x, y: node.values.humidity });
       this.temperatures.push({ x, y: node.values.temperature, to });
 
@@ -214,8 +245,6 @@ class MeteogramChart {
       if (i === 0) {
         pointStart = (x + to) / 2;
       }
-      console.log('1')
-      console.log(this.temperatures[0])
     });
 
     this.createChart();
@@ -233,7 +262,8 @@ const Meteogram: React.FC<MeteogramProps> = ({ meteogramData }) => {
 
   return (
     <div>
-      <div id="container" ref={chartContainerRef} style={{ width: '100%', height: '400px' }}></div>
+      <p>wind arrows are there but margin is a bit weird, sometimes stuck inside graph</p>
+      <div id="container" ref={chartContainerRef} style={{ width: '100%', height: '400px' }}>p</div>
       <div id="loading"></div>
     </div>
   );
