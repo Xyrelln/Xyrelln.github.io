@@ -111,25 +111,32 @@ class MeteogramChart {
           tickInterval: 1,
           gridLineColor: 'rgba(128, 128, 128, 0.1)',
         },
-        {
-          title: {
-            text: 'hPa',
-            align: 'high',
-            rotation: 0,
-            style: {
-              fontSize: '10px',
-              color: 'brown',
-            },
+        { // Air pressure
+          allowDecimals: false,
+          title: { // Title on top of axis
+              text: 'hPa',
+              offset: 0,
+              align: 'high',
+              rotation: 0,
+              style: {
+                  fontSize: '10px',
+                  color: '#e1af45'
+              },
+              textAlign: 'left',
+              x: 3
           },
           labels: {
-            style: {
-              fontSize: '8px',
-              color: 'red',
-            },
+              style: {
+                  fontSize: '8px',
+                  color: '#e1af45'
+              },
+              y: 2,
+              x: 3
           },
           gridLineWidth: 0,
           opposite: true,
-        },
+          showLastLabel: false
+      }
       ],
       legend: {
         enabled: false,
