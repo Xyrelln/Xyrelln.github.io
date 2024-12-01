@@ -79,6 +79,31 @@ app.post('/weather-timeline', (request: Request, response: Response) => {
     });
 });
 
+app.post('/forcast-solartime', (request: Request, response: Response) => {
+    const { location } = request.body;
+
+    ClimaCellAPI.requestData({
+        apikey: TOMORROW_IO_API_KEY,
+        location,
+        fields: [
+            'weatherCode', 
+            'sunriseTime', 
+            'sunsetTime'
+        ],
+        timesteps: '1d',
+        startTime: 'now',
+        endTime: 'nowPlus5d'
+    })
+    .then(data => {
+        if (data.message) response.status(200).json(data);
+        response.status(200).json(data);
+    })
+    .catch(err => {
+        console.error("Fetch error when fetching solartimes:", err);
+        response.status(500).send("Internal Server Error: forcast-solartime");
+    });
+});
+
 // Meteogram data endpoint
 app.post('/meteogram-data', (request: Request, response: Response) => {
     const { location } = request.body;
