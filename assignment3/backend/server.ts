@@ -8,6 +8,17 @@ import { favoritesRouter } from './routes/favorites.router';
 const app = express();
 app.use(express.json());
 app.use(cors()); 
+app.use((req: Request, res: Response, next) => {
+    const { method, url, body, params, query } = req;
+
+    console.log(`[${new Date().toISOString()}] ${method} ${url}`);
+    console.log('Query Params:', query);
+    console.log('Route Params:', params);
+    console.log('Request Body:', body);
+
+    // Call the next middleware or route handler
+    next();
+});
 
 const port = process.env.PORT || 6969;
 
@@ -59,6 +70,7 @@ app.post('/weather-timeline', (request: Request, response: Response) => {
     ClimaCellAPI.requestData({
         apikey: TOMORROW_IO_API_KEY,
         location,
+        units: 'metric',
         fields: [
             'weatherCode', 
             'temperatureMax', 
@@ -70,8 +82,14 @@ app.post('/weather-timeline', (request: Request, response: Response) => {
         endTime: 'nowPlus5d'
     })
     .then(data => {
-        if (data.message) response.status(200).json(data);
-        response.status(200).json(data);
+        if (data.message) {
+            response.status(503).json({
+            "error": "Upstream service unavailable",
+            "message": "Please try again later."
+            }) 
+        } else {
+            response.status(200).json(data);
+        }
     })
     .catch(err => {
         console.error("Fetch error when fetching weather timeline:", err);
@@ -79,30 +97,82 @@ app.post('/weather-timeline', (request: Request, response: Response) => {
     });
 });
 
-app.post('/forcast-solartime', (request: Request, response: Response) => {
+app.post('/forecast-solartime', (request: Request, response: Response) => {
     const { location } = request.body;
 
     ClimaCellAPI.requestData({
         apikey: TOMORROW_IO_API_KEY,
         location,
+        units: 'metric',
         fields: [
             'weatherCode', 
             'sunriseTime', 
-            'sunsetTime'
+            'sunsetTime',
+            'temperatureMax',
+            'temperatureMin'
         ],
         timesteps: '1d',
         startTime: 'now',
         endTime: 'nowPlus5d'
     })
     .then(data => {
-        if (data.message) response.status(200).json(data);
-        response.status(200).json(data);
+        console.log("forcast-solartime res:")
+        console.log(JSON.stringify(data));
+        if (data.message) {
+            response.status(503).json({
+            "error": "Upstream service unavailable",
+            "message": "Please try again later."
+            }) 
+        } else {
+            response.status(200).json(data);
+        }
     })
     .catch(err => {
         console.error("Fetch error when fetching solartimes:", err);
         response.status(500).send("Internal Server Error: forcast-solartime");
     });
 });
+
+app.post('/mobile-today', (request: Request, response: Response) => {
+    const { location } = request.body;
+
+    ClimaCellAPI.requestData({
+        apikey: TOMORROW_IO_API_KEY,
+        location,
+        units: 'metric',
+        fields: [
+            'weatherCode', 
+            'temperature', 
+            'humidity',
+            'windSpeed',
+            'visibility',
+            'pressureSurfaceLevel',
+            'precipitationIntensity',
+            'cloudCover',
+            'uvIndex'
+        ],
+        timesteps: '1d',
+        startTime: 'now',
+        endTime: 'nowPlus1d'
+    })
+    .then(data => {
+        console.log("mobile-today res:")
+        console.log(JSON.stringify(data));
+        if (data.message) {
+            response.status(503).json({
+            "error": "Upstream service unavailable",
+            "message": "Please try again later."
+            }) 
+        } else {
+            response.status(200).json(data);
+        }
+    })
+    .catch(err => {
+        console.error("Fetch error when fetching solartimes:", err);
+        response.status(500).send("Internal Server Error: forcast-solartime");
+    });
+});
+
 
 // Meteogram data endpoint
 app.post('/meteogram-data', (request: Request, response: Response) => {
@@ -111,6 +181,7 @@ app.post('/meteogram-data', (request: Request, response: Response) => {
     ClimaCellAPI.requestData({
         apikey: TOMORROW_IO_API_KEY,
         location,
+        units: 'metric',
         fields: [
             'temperature', 
             'humidity', 
@@ -123,7 +194,14 @@ app.post('/meteogram-data', (request: Request, response: Response) => {
         endTime: 'nowPlus5d'
     })
     .then(data => {
-        response.status(200).json(data);
+        if (data.message) {
+            response.status(503).json({
+            "error": "Upstream service unavailable",
+            "message": "Please try again later."
+            }) 
+        } else {
+            response.status(200).json(data);
+        }
     })
     .catch(err => {
         console.error("Fetch error when fetching meteogram data:", err);
@@ -140,6 +218,7 @@ app.post('/daily-detail', (request: Request, response: Response) => {
     ClimaCellAPI.requestData({
         apikey: TOMORROW_IO_API_KEY,
         location,
+        units: 'metric',
         fields: [
             'weatherCode', 
             'temperatureMax',
@@ -157,7 +236,14 @@ app.post('/daily-detail', (request: Request, response: Response) => {
         endTime: nextDay.toISOString()
     })
     .then(data => {
-        response.status(200).json(data);
+        if (data.message) {
+            response.status(503).json({
+            "error": "Upstream service unavailable",
+            "message": "Please try again later."
+            }) 
+        } else {
+            response.status(200).json(data);
+        }
     })
     .catch(err => {
         console.error("Fetch error when fetching daily detail data:", err);
@@ -167,9 +253,14 @@ app.post('/daily-detail', (request: Request, response: Response) => {
 
 app.get('/autocomplete/:input', (request: Request, response: Response) => {
     const input = request.params?.input;
+    console.log(input)
+
     fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=(cities)&key=${GOOGLE_API_KEY}`)
     .then(fetchRes => fetchRes.json())
-    .then(data => response.status(200).json(data))
+    .then(data => {
+        console.log('Fetched data:', data);
+        response.status(200).json(data)
+    })
     .catch(err => {
         console.error("Fetch error when fetching autocomplete:", err);
         response.status(500).send("Internal Server Error: autocomplete");
